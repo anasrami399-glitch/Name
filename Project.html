@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment & Record Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div>
+                <h1>Payment & Record Tracker</h1>
+                <p class="subtitle">Track people, due/payment dates, and payment status effortlessly</p>
+            </div>
+            <button id="exportBtn" class="btn btn-secondary" title="Export records to CSV">
+                <span>📥 Export CSV</span>
+            </button>
+        </header>
+
+        <!-- Stats Overview Cards -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Total Records</span>
+                <span class="stat-value" id="totalRecords">0</span>
+            </div>
+            <div class="stat-card stat-paid">
+                <span class="stat-label">Paid</span>
+                <span class="stat-value" id="paidRecords">0</span>
+            </div>
+            <div class="stat-card stat-pending">
+                <span class="stat-label">Pending / Unpaid</span>
+                <span class="stat-value" id="pendingRecords">0</span>
+            </div>
+            <div class="stat-card stat-amount">
+                <span class="stat-label">Total Paid Amount</span>
+                <span class="stat-value" id="totalAmount">$0.00</span>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <main class="content-grid">
+            <!-- Add Record Card -->
+            <section class="card form-card">
+                <h2>Add New Record</h2>
+                <form id="recordForm">
+                    <div class="form-group">
+                        <label for="personName">Person / Client Name <span class="required">*</span></label>
+                        <input type="text" id="personName" placeholder="e.g. Sarah Connor" required autocomplete="off">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="recordDate">Date <span class="required">*</span></label>
+                            <input type="date" id="recordDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="recordAmount">Amount ($)</label>
+                            <input type="number" id="recordAmount" placeholder="0.00" min="0" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recordNotes">Notes (Optional)</label>
+                        <input type="text" id="recordNotes" placeholder="e.g. Invoice #102, Cash, Bank Transfer">
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="paymentStatus">
+                            <span class="checkmark"></span>
+                            <span class="checkbox-label">Payment Received (Paid)</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <span>➕ Add Record</span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Records List Card -->
+            <section class="card list-card">
+                <div class="list-header">
+                    <h2>Records</h2>
+                    <div class="controls">
+                        <!-- Search input -->
+                        <div class="search-box">
+                            <input type="text" id="searchInput" placeholder="Search by name or notes...">
+                        </div>
+                        <!-- Filter buttons -->
+                        <div class="filter-tabs">
+                            <button class="filter-tab active" data-filter="all">All</button>
+                            <button class="filter-tab" data-filter="paid">Paid</button>
+                            <button class="filter-tab" data-filter="pending">Pending</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table View -->
+                <div class="table-container">
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">Check</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Notes</th>
+                                <th style="width: 80px; text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recordsTableBody">
+                            <!-- Injected by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state">
+                    <div class="empty-icon">📋</div>
+                    <p class="empty-title">No records found</p>
+                    <p class="empty-subtitle">Add your first name, date, and payment status using the form.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
